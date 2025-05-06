@@ -67,17 +67,21 @@ We provide scripts that can be used in the tracking algorithms listed in the pap
 
 For GHOST, we provide the detections from our trained model on the test set in [here](detections_GHOST). Please see [GHOST](https://github.com/dvl-tum/GHOST) for more details.
 
-Follow the installation instructions of your desired tracking algorithm. 
-
-1. Download trained models [here](https://1drv.ms/f/s!App_ySGnU8ijvP5uIw1qva19CuLv_w?e=UPT23N). Put in folder named **pretrained**.
-
-2. Move respective script into **tools** folder or **root** if tools does not exist. 
-
-3. For example, run:
+1. Follow the installation instructions of your desired tracking algorithm.
+   
+2. Install SAHI and Ultralytics
 ~~~
-python bot_slopetrack.py
+pip install -U ultralytics sahi
 ~~~
-4. Simply run the evaluation code:
+3. Download trained models [here](https://1drv.ms/f/s!App_ySGnU8ijvP5uIw1qva19CuLv_w?e=UPT23N). Put in folder named **pretrained**.
+
+4. Move respective script into **tools** folder or **root** if tools does not exist. 
+
+5. For example, run:
+~~~
+python tools/bot_yolov11.py
+~~~
+6. Simply run the evaluation code:
 ```
 python scripts/run_mot_challenge.py GT_FOLDER slope_track/test --BENCHMARK slope_track --METRICS HOTA CLEAR Identity --TRACKERS_FOLDER yolo11/slopetrack --USE_PARALLEL False --NUM_PARALLEL_CORES 1
 ```
