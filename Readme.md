@@ -61,13 +61,11 @@ python fast_reid/tools/train_net.py --config-file ./fast_reid/configs/SlopeTrack
 
 You can see [HybridSORT](https://github.com/ymzis69/HybridSORT) and [FastReid](https://github.com/JDAI-CV/fast-reid) pages for more details.
 
-
-
 ## Evaluation
 
 We provide scripts that can be used in the tracking algorithms listed in the paper except GHOST.
 
-For GHOST, we provide the detections from our trained model on the test set in [here](). Please see [GHOST](https://github.com/dvl-tum/GHOST) for more details.
+For GHOST, we provide the detections from our trained model on the test set in [here](detections_GHOST). Please see [GHOST](https://github.com/dvl-tum/GHOST) for more details.
 
 Follow the installation instructions of your desired tracking algorithm. 
 
@@ -85,6 +83,6 @@ python scripts/run_mot_challenge.py GT_FOLDER slope_track/test --BENCHMARK slope
 ```
 
 ## Acknowledgement  
-The evaluation metrics and code are from [MOT Challenge](https://motchallenge.net/) and [TrackEval](https://github.com/JonathonLuiten/TrackEval). The analysis code is based on [DanceTrack](https://github.com/DanceTrack/DanceTrack) and [SportsMoT](https://github.com/MCG-NJU/SportsMOT).  Thank you for your amazing work!
+The evaluation metrics and code are from [MOT Challenge](https://motchallenge.net/) and [TrackEval](https://github.com/JonathonLuiten/TrackEval). The analysis code is based on [DanceTrack](https://github.com/DanceTrack/DanceTrack) and [SportsMoT](https://github.com/MCG-NJU/SportsMOT). The ReID framework is from [FastReid](https://github.com/JDAI-CV/fast-reid). Thank you for your amazing work!
 
 **This research is part of the collaborative i-Démo Régionalisé project of the French government's regionalized France 2030 program. It was funded by BPI France, Direction Générale de la Compétitivité de l'Industrie et des Services (DGCIS), Grenoble Alpes Métropole and the Auvergne-Rhône-Alpes Region.**
