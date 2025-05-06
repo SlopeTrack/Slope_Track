@@ -1,0 +1,11 @@
+_BASE_: ../Base-SBS.yml
+
+MODEL:
+  BACKBONE:
+    NAME: build_resnest_backbone
+
+DATASETS:
+  NAMES: ("SlopeTrack",)
+  TESTS: ("SlopeTrack",)
+
+OUTPUT_DIR: logs/SlopeTrack/sbs_S50
