@@ -86,7 +86,11 @@ python tools/bot_yolov11.py
 python scripts/run_mot_challenge.py GT_FOLDER slope_track/test --BENCHMARK slope_track --METRICS HOTA CLEAR Identity --TRACKERS_FOLDER yolo11/slopetrack --USE_PARALLEL False --NUM_PARALLEL_CORES 1
 ```
 
+
+## License
+The code is under the Modified BSD License.
+
 ## Acknowledgement  
 The evaluation metrics and code are from [MOT Challenge](https://motchallenge.net/) and [TrackEval](https://github.com/JonathonLuiten/TrackEval). The analysis code is based on [DanceTrack](https://github.com/DanceTrack/DanceTrack) and [SportsMoT](https://github.com/MCG-NJU/SportsMOT). The ReID framework is from [FastReid](https://github.com/JDAI-CV/fast-reid). Thank you for your amazing work!
 
-**This research is part of the collaborative i-Démo Régionalisé project of the French government's regionalized France 2030 program. It was funded by BPI France, Direction Générale de la Compétitivité de l'Industrie et des Services (DGCIS), Grenoble Alpes Métropole and the Auvergne-Rhône-Alpes Region.**
+**This research work is being carried out as part of a collaborative i-Démo Regionalized project under the French government's regionalized France 2030 program. It was financed via Bpifrance by the French government, the Auvergne-Rhône-Alpes Region and Grenoble Alpes Métropole.**
