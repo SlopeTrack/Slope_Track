@@ -105,9 +105,7 @@ def convert_mot_to_mamba_dataset(mot_folder, output_file, seq_len=5):
                     'height':im_height
                 })
 
-    for i in full_tracks:
-        if i['sequence']=='slope_track000012' and i['old_track_id']== 6:
-            print(len(i['frames']))
+    
 
     print(f"Total tracklets collected: {len(full_tracks)}")
 
@@ -117,7 +115,7 @@ def convert_mot_to_mamba_dataset(mot_folder, output_file, seq_len=5):
     print(f"Saved processed dataset to {output_file}")
 
 if __name__ == "__main__":
-    base_folder = "slope_track"
+    base_folder = "../slope_track"
 
     # Train
     train_folder = os.path.join(base_folder, "train")
