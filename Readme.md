@@ -61,11 +61,13 @@ python fast_reid/tools/train_net.py --config-file ./fast_reid/configs/SlopeTrack
 
 You can see [HybridSORT](https://github.com/ymzis69/HybridSORT) and [FastReid](https://github.com/JDAI-CV/fast-reid) pages for more details.
 
+## Motion Modelling
+
+For motion, we utilizes the simple [Mamba](https://github.com/state-spaces/mamba/blob/main/mamba_ssm/modules/mamba_simple.py) block from [Mamba](https://github.com/state-spaces/mamba). For details, please see [training instructions](motion_training/Readme.md).
+
 ## Evaluation
 
-We provide scripts that can be used in the tracking algorithms listed in the paper except GHOST.
-
-For GHOST, we provide the detections from our trained model on the test set in [here](detections_GHOST). Please see [GHOST](https://github.com/dvl-tum/GHOST) for more details.
+We provide scripts that can be used in the tracking algorithms listed in the paper.
 
 1. Follow the installation instructions of your desired tracking algorithm.
    
@@ -83,7 +85,7 @@ python tools/bot_yolov11.py
 ~~~
 6. Simply run the evaluation code:
 ```
-python scripts/run_mot_challenge.py GT_FOLDER slope_track/test --BENCHMARK slope_track --METRICS HOTA CLEAR Identity --TRACKERS_FOLDER yolo11/slopetrack --USE_PARALLEL False --NUM_PARALLEL_CORES 1
+python scripts/run_mot_challenge.py --GT_FOLDER slope_track --BENCHMARK slope_track --METRICS HOTA CLEAR Identity --TRACKERS_FOLDER yolo11/slopetrack --USE_PARALLEL False --NUM_PARALLEL_CORES 1
 ```
 
 
@@ -94,3 +96,4 @@ The code is under the Modified BSD License.
 The evaluation metrics and code are from [MOT Challenge](https://motchallenge.net/) and [TrackEval](https://github.com/JonathonLuiten/TrackEval). The analysis code is based on [DanceTrack](https://github.com/DanceTrack/DanceTrack) and [SportsMoT](https://github.com/MCG-NJU/SportsMOT). The ReID framework is from [FastReid](https://github.com/JDAI-CV/fast-reid). Thank you for your amazing work!
 
 **This research work is being carried out as part of a collaborative i-Démo Regionalized project under the French government's regionalized France 2030 program. It was financed via Bpifrance by the French government, the Auvergne-Rhône-Alpes Region and Grenoble Alpes Métropole.**
+
