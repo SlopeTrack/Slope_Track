@@ -64,7 +64,7 @@ You can see [HybridSORT](https://github.com/ymzis69/HybridSORT) and [FastReid](h
 
 ## Motion Modelling
 
-For motion, we utilizes the simple [Mamba](https://github.com/state-spaces/mamba/blob/main/mamba_ssm/modules/mamba_simple.py) block from [Mamba](https://github.com/state-spaces/mamba). For details, please see [training instructions](motion_training/Readme.md).
+For motion, we utilizes the [simple Mamba block](https://github.com/state-spaces/mamba/blob/main/mamba_ssm/modules/mamba_simple.py) from [Mamba](https://github.com/state-spaces/mamba). For details, please see [training instructions](motion_training/Readme.md).
 
 ## Evaluation
 
@@ -97,5 +97,6 @@ The code is under the Modified BSD License.
 The evaluation metrics and code are from [MOT Challenge](https://motchallenge.net/) and [TrackEval](https://github.com/JonathonLuiten/TrackEval). The analysis code is based on [DanceTrack](https://github.com/DanceTrack/DanceTrack) and [SportsMoT](https://github.com/MCG-NJU/SportsMOT). The ReID framework is from [FastReid](https://github.com/JDAI-CV/fast-reid). Thank you for your amazing work!
 
 **This research work is being carried out as part of a collaborative i-Démo Regionalized project under the French government's regionalized France 2030 program. It was financed via Bpifrance by the French government, the Auvergne-Rhône-Alpes Region and Grenoble Alpes Métropole.**
+
 
 
