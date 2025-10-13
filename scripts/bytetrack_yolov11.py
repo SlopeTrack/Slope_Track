@@ -16,7 +16,7 @@ sys.path.append('.')
 #from yolox.exp import get_exp
 #from yolox.utils import fuse_model, get_model_info, postprocess
 #from yolox.utils.visualize import plot_tracking
-from tracker.byte_tracker_motion import BYTETracker
+from tracker.byte_tracker import BYTETracker
 #from yolox.tracking_utils.timer import Timer
 
 from sahi import AutoDetectionModel
@@ -42,7 +42,7 @@ def get_fps_from_seqinfo(seq_path):
 def make_parser():
     parser = argparse.ArgumentParser("ByteTrack Demo!")
     parser.add_argument("--split", default="test", type=str, help="Choose dataset split: 'test' or 'val'")
-    parser.add_argument("--dataset_root", default="../sambamotr/dataset/slope_track",type=str, help="dataset root")
+    parser.add_argument("--dataset_root", default="../slope_track",type=str, help="dataset root")
     parser.add_argument("--expn", "--experiment-name", type=str, default='slope_track')
 
     parser.add_argument(
@@ -60,7 +60,7 @@ def make_parser():
         type=str,
         help="pls input your expriment description file",
     )
-    parser.add_argument("-c", "--ckpt", default='pretrained/slopetrack_yolov11.pt', type=str, help="ckpt for eval")
+    parser.add_argument("-c", "--ckpt", default='../pretrained/slopetrack_yolov11.pt', type=str, help="ckpt for eval")
     parser.add_argument(
         "--device",
         default="gpu",
@@ -104,6 +104,7 @@ def make_parser():
     parser.add_argument("--mot20", dest="mot20", default=False, action="store_true", help="test mot20.")
     
     # reid args
+    #not used just replicate
     parser.add_argument("--with-reid", dest="with_reid", default=False, action="store_true", help="use Re-ID flag.")
     parser.add_argument("--fast_reid_config", dest="fast_reid_config", default=r"fast_reid/configs/SlopeTrack/sbs_S50.yml", type=str, help="reid config file path")
     parser.add_argument("--fast_reid_weights", dest="fast_reid_weights", default=r"../../pretrained/slopetrack_sbs_S50.pth", type=str, help="reid weight path")
@@ -303,7 +304,7 @@ def main(args):
     os.makedirs(output_dir, exist_ok=True)
 
     if args.save_result:
-        vis_folder = osp.join(output_dir, 'bytetrack_glide')
+        vis_folder = osp.join(output_dir, 'bytetrack')
         os.makedirs(vis_folder, exist_ok=True)
 
     args.device = torch.device("cuda" if args.device == "gpu" else "cpu")
