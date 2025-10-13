@@ -40,7 +40,7 @@ def get_fps_from_seqinfo(seq_path):
 def make_parser():
     parser = argparse.ArgumentParser("DeepEIoU Demo")
     parser.add_argument("--split", default="test", type=str, help="Choose dataset split: 'test' or 'val'")
-    parser.add_argument("--dataset_root", default="../../sambamotr/dataset/slope_track",type=str, help="dataset root")
+    parser.add_argument("--dataset_root", default="../../slope_track",type=str, help="dataset root")
     parser.add_argument("--expn", "--experiment-name", type=str, default="slope_track")
     parser.add_argument(
         "--save_result",
@@ -93,7 +93,7 @@ def make_parser():
 
     # reid args
     parser.add_argument("--with-reid", dest="with_reid", default=False, action="store_true", help="use Re-ID flag.")
-    parser.add_argument("--fast_reid_config", dest="fast_reid_config", default=r"fast_reid/configs/SlopeTrack/sbs_S50.yml", type=str, help="reid config file path")
+    parser.add_argument("--fast_reid_config", dest="fast_reid_config", default=r"../../fast_reid/configs/SlopeTrack/sbs_S50.yml", type=str, help="reid config file path")
     parser.add_argument("--fast_reid_weights", dest="fast_reid_weights", default=r"../../pretrained/slopetrack_sbs_S50.pth", type=str, help="reid weight path")
     parser.add_argument('--proximity_thresh', type=float, default=0.5, help='threshold for rejecting low overlap reid matches')
     parser.add_argument('--appearance_thresh', type=float, default=0.25, help='threshold for rejecting low appearance similarity reid matches')
@@ -284,14 +284,14 @@ def image_demo(predictor, vis_folder, current_time, args):
 
 def main(args):
 
-    output_dir= '../yolo11'
+    output_dir= '../../yolo11'
     os.makedirs(output_dir, exist_ok=True)
 
     output_dir = osp.join(output_dir, args.expn)
     os.makedirs(output_dir, exist_ok=True)
 
     if args.save_result:
-        vis_folder = osp.join(output_dir, 'deepeiou_mamba60_60_60_for_paper')
+        vis_folder = osp.join(output_dir, 'deepeiou_glidetrack')
         os.makedirs(vis_folder, exist_ok=True)
 
     args.device = torch.device("cuda" if args.device == "gpu" else "cpu")
