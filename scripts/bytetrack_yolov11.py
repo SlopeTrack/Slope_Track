@@ -60,7 +60,7 @@ def make_parser():
         type=str,
         help="pls input your expriment description file",
     )
-    parser.add_argument("-c", "--ckpt", default='../pretrained/slopetrack_yolov11.pt', type=str, help="ckpt for eval")
+    parser.add_argument("-c", "--ckpt", default='pretrained/slopetrack_yolov11.pt', type=str, help="ckpt for eval")
     parser.add_argument(
         "--device",
         default="gpu",
