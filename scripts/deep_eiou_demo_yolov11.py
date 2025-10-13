@@ -93,7 +93,7 @@ def make_parser():
 
     # reid args
     parser.add_argument("--with-reid", dest="with_reid", default=True, action="store_true", help="use Re-ID flag.")
-    parser.add_argument("--fast_reid_config", dest="fast_reid_config", default=r"fast_reid/configs/SlopeTrack/sbs_S50.yml", type=str, help="reid config file path")
+    parser.add_argument("--fast_reid_config", dest="fast_reid_config", default=r"../fast_reid/configs/SlopeTrack/sbs_S50.yml", type=str, help="reid config file path")
     parser.add_argument("--fast_reid_weights", dest="fast_reid_weights", default=r"../../pretrained/slopetrack_sbs_S50.pth", type=str, help="reid weight path")
     parser.add_argument('--proximity_thresh', type=float, default=0.5, help='threshold for rejecting low overlap reid matches')
     parser.add_argument('--appearance_thresh', type=float, default=0.25, help='threshold for rejecting low appearance similarity reid matches')
