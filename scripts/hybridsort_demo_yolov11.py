@@ -115,7 +115,7 @@ def make_parser():
     parser.add_argument("--alpha", default=0.8, type=float, help="momentum of embedding update")
     parser.add_argument("--with-reid", dest="with_reid", default=False, action="store_true", help="use Re-ID flag.")
     parser.add_argument("--with_fastreid", dest="with_fastreid", default=False, action="store_true", help="use FastReID flag.")
-    parser.add_argument("--fast_reid_config", dest="fast_reid_config", default=r"fast_reid/configs/SlopeTrack/sbs_S50.yml", type=str, help="reid config file path")
+    parser.add_argument("--fast_reid_config", dest="fast_reid_config", default=r"../fast_reid/configs/SlopeTrack/sbs_S50.yml", type=str, help="reid config file path")
     parser.add_argument("--fast_reid_weights", dest="fast_reid_weights", default=r"../pretrained/slopetrack_sbs_S50.pth", type=str, help="reid weight path")
     parser.add_argument("--with_longterm_reid", dest="with_longterm_reid", default=True, action="store_true", help="use long-term reid features for association.")
     parser.add_argument("--longterm_reid_weight", default=0.20, type=float, help="weight of appearance cost matrix when using long term reid features in 1st stage association")
