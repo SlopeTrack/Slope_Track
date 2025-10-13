@@ -166,7 +166,7 @@ def make_parser():
         help="device to run our model, can either be cpu or gpu",
     )
 
-
+    #not used replicate
     parser.add_argument("--with-reid", dest="with_reid", default=False, action="store_true", help="use Re-ID flag.")
     parser.add_argument("--fast_reid_config", dest="fast_reid_config", default=r"fast_reid/configs/SlopeTrack/sbs_S50.yml", type=str, help="reid config file path")
     parser.add_argument("--fast_reid_weights", dest="fast_reid_weights", default=r"../../pretrained/slopetrack_sbs_S50.pth", type=str, help="reid weight path")
