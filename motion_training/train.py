@@ -32,7 +32,7 @@ def get_teacher_forcing_ratio(step, total_steps, start=0.5, end=0.0):
 
 #global_step=0
 
-def build_scheduler(optimizer, total_epochs, warmup_epochs=200, min_lr=1e-5, base_lr=1e-4):
+def build_scheduler(optimizer, total_epochs, warmup_epochs=100, min_lr=1e-5, base_lr=1e-4):
     def lr_lambda(current_epoch):
         if current_epoch < warmup_epochs:
             # Linear warmup from 0 to base_lr
