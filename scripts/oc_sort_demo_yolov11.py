@@ -44,7 +44,7 @@ def make_parser():
     parser.add_argument("--test_dataset", action="store_true")
     parser.add_argument("--exp_name", type=str, default="exp1")
     parser.add_argument("--split", default="test", type=str, help="Choose dataset split: 'test' or 'val'")
-    parser.add_argument("--dataset_root", default="../sambamotr/dataset/slope_track",type=str, help="dataset root")
+    parser.add_argument("--dataset_root", default="../slope_track",type=str, help="dataset root")
     parser.add_argument("--expn", "--experiment-name", type=str, default="slope_track")
 
     # distributed
