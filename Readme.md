@@ -90,7 +90,7 @@ python tools/bot_sort_demo_yolov11.py
 python scripts/run_mot_challenge.py --GT_FOLDER slope_track --BENCHMARK slope_track --METRICS HOTA CLEAR Identity --TRACKERS_FOLDER yolo11/slopetrack --USE_PARALLEL False --NUM_PARALLEL_CORES 1
 ```
 
-# DeepEIoU + GlideTrack
+### DeepEIoU + GlideTrack
 
 1. Follow the installation instructions of [DeepEIoU][TrackEval](https://github.com/JonathonLuiten/TrackEval)).
    
@@ -120,6 +120,7 @@ The code is under the Modified BSD License.
 The evaluation metrics and code are from [MOT Challenge](https://motchallenge.net/) and [TrackEval](https://github.com/JonathonLuiten/TrackEval). The analysis code is based on [DanceTrack](https://github.com/DanceTrack/DanceTrack) and [SportsMoT](https://github.com/MCG-NJU/SportsMOT). The ReID framework is from [FastReid](https://github.com/JDAI-CV/fast-reid). Thank you for your amazing work!
 
 **This research work is being carried out as part of a collaborative i-Démo Regionalized project under the French government's regionalized France 2030 program. It was financed via Bpifrance by the French government, the Auvergne-Rhône-Alpes Region and Grenoble Alpes Métropole.**
+
 
 
 
