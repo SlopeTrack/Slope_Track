@@ -45,7 +45,7 @@ def get_fps_from_seqinfo(seq_path):
 def make_parser():
     parser = argparse.ArgumentParser("Hybrid-SORT parameters")
     parser.add_argument("--split", default="test", type=str, help="Choose dataset split: 'test' or 'val'")
-    parser.add_argument("--dataset_root", default="../sambamotr/dataset/slope_track",type=str, help="dataset root")
+    parser.add_argument("--dataset_root", default="../slope_track",type=str, help="dataset root")
     parser.add_argument("--expn", "--experiment-name", type=str, default="slope_track")
     parser.add_argument(
         "--save_result",
