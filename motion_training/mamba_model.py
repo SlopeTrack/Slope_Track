@@ -325,7 +325,7 @@ class MambaPositionPredictor(nn.Module):
         #self.num_layers = num_layers
         #self.activation= nn.ReLU()
         self.norm1 = nn.LayerNorm(d_model*3)
-        self.norm2 = nn.LayerNorm(d_model)
+        ###self.norm2 = nn.LayerNorm(d_model)
         #self.norm3 = nn.LayerNorm(d_model)
         #d_ff = 1 * d_model
         #self.conv1 = nn.Conv1d(in_channels=d_model, out_channels=d_ff, kernel_size=1)
@@ -333,15 +333,15 @@ class MambaPositionPredictor(nn.Module):
        
 
         #self.proj = nn.Linear(192, d_model)
-        self.final_proj = nn.Linear(192, d_model) 
+        #self.final_proj = nn.Linear(192, d_model) 
         # === Project Mamba hidden to LSTM init ===
         #self.h_proj = nn.Sequential(nn.Linear(d_model, hidden),nn.Tanh(), nn.Dropout(0.3), nn.LayerNorm(hidden))
         #self.c_proj = nn.Sequential(nn.Linear(d_model, hidden),nn.Tanh(), nn.Dropout(0.3), nn.LayerNorm(hidden))
 
         #self.c_proj = nn.Sequential(nn.Linear(d_model, hidden))
-        #self.dropout1 = nn.Dropout(0.5)
+        self.dropout1 = nn.Dropout(0.2)
         self.dropout2 = nn.Dropout(0.1)
-        #self.dropout = nn.Dropout(0.2)
+        self.dropout3 = nn.Dropout(0.1)
 
         # === LSTM decoder ===
         #self.decoder = DecoderLSTM(hidden=hidden)
@@ -381,8 +381,8 @@ class MambaPositionPredictor(nn.Module):
             t_emb = t_emb_all * valid_mask.unsqueeze(-1)
 
             s_emb = self.spatial_embedding(x, lengths)
-            mask_expanded = valid_mask.unsqueeze(-1).float()
-            x = x * mask_expanded
+            #mask_expanded = valid_mask.unsqueeze(-1).float()
+            #x = x * mask_expanded
             enc_in = torch.cat([x, s_emb, t_emb], dim=-1)
             #enc_in = s_emb + t_emb + self.in_proj(x)
             #t_emb = self.time_attention(t_emb)
@@ -395,28 +395,28 @@ class MambaPositionPredictor(nn.Module):
 
 
             # === Encode history with Mamba ===
-            h_original = self.in_proj(new_enc_in)  # (B, T_in, d_model)
-            h = h_original
-            for i, block in enumerate(self.mamba_blocks):
-                h = block(h)
-                if len(self.mamba_blocks)>1 and i == 0:
+            h = self.dropout1(self.in_proj(new_enc_in))  # (B, T_in, d_model)
+            #h = h_original
+            for block in self.mamba_blocks:
+                #h = block(h)
+                """if len(self.mamba_blocks)>1 and i == 0:
                     h_out = block(h)
                     h = self.norm2(self.dropout2(self.final_proj(torch.cat([h_out, h], dim=-1))))
-                else:
-                    h_out = block(h)
-                    h = self.dropout2(h_out)
+                else:"""
+                h = block(h)
+                h = self.dropout2(h)
                 #h = self.dropout(h + h_original)
                 #h = self.dropout(self.proj(torch.cat([h ,h_original], dim=-1)))
 
-            h_bwd_original = torch.flip(self.in_proj(new_enc_in), dims=[1])  # (B, T_in, d_model)
-            h_bwd = h_bwd_original
-            for i, block in enumerate(self.mamba_blocks):
-                if len(self.mamba_blocks)>1 and i == 0:
+            h_bwd = torch.flip(self.in_proj(new_enc_in), dims=[1])  # (B, T_in, d_model)
+            #h_bwd = h_bwd_original
+            for block in self.mamba_blocks:
+                """if len(self.mamba_blocks)>1 and i == 0:
                     h_bwd_out = block(h_bwd)
                     h_bwd = self.norm2(self.dropout2(self.final_proj(torch.cat([h_bwd_out,h_bwd], dim=-1))))
-                else:
-                    h_bwd_out = block(h_bwd)
-                    h_bwd = self.dropout2(h_bwd_out)
+                else:"""
+                h_bwd = block(h_bwd)
+                h_bwd = self.dropout2(h_bwd)
                 #h_bwd = self.dropout(h_bwd + h_bwd_original)
                 #    h_bwd = self.dropout2(self.norm2(self.proj(torch.cat([h_bwd, h_bwd_original], dim=-1))))
                 #h_bwd = h_bwd.permute(0,2,1)
@@ -424,7 +424,7 @@ class MambaPositionPredictor(nn.Module):
                 #h_bwd = self.dropout2(h_bwd)
                 h_bwd_out = block(h_bwd + h_bwd_original)
                 h_bwd = self.dropout(h_bwd_out + h_bwd"""
-            output = self.norm1(torch.cat([h, h_bwd, self.in_proj(new_enc_in)], dim= -1))
+            output = self.norm1(torch.cat([h, h_bwd, self.in_proj(enc_in)], dim= -1))
             """if args.nll:
                 mu, sigma = self.gauss_head(output)
                 sigma_all.append(sigma)
@@ -514,4 +514,3 @@ class MambaPositionPredictor(nn.Module):
             return mu_all, sigma_all
             else:
             return mu_all.squeeze(2)"""
-
