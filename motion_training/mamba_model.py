@@ -113,7 +113,7 @@ class SelfAttention(nn.Module):
         return out"""
 
 class SpatialPosEncoding(nn.Module):
-    def __init__(self, in_dim=4, d_model=128, num_freqs=2):
+    def __init__(self, in_dim=4, d_model=128, num_freqs=8):
         super().__init__()
         self.num_freqs = num_freqs
         self.linear = nn.Linear(in_dim * 2 * num_freqs, d_model)
@@ -198,7 +198,7 @@ class LinearHead(nn.Module):
     def __init__(self, in_features):
         super().__init__()
         self.fc_xy = nn.Sequential(
-                  nn.Dropout(0.3),
+                  nn.Dropout(0.2),
                   nn.Linear(in_features, in_features//2), 
                   #nn.Dropout(0.3),
                   nn.Tanh(),
@@ -339,9 +339,9 @@ class MambaPositionPredictor(nn.Module):
         #self.c_proj = nn.Sequential(nn.Linear(d_model, hidden),nn.Tanh(), nn.Dropout(0.3), nn.LayerNorm(hidden))
 
         #self.c_proj = nn.Sequential(nn.Linear(d_model, hidden))
-        self.dropout1 = nn.Dropout(0.2)
+        self.dropout1 = nn.Dropout(0.1)
         self.dropout2 = nn.Dropout(0.1)
-        self.dropout3 = nn.Dropout(0.1)
+        self.dropout3 = nn.Dropout(0.0)
 
         # === LSTM decoder ===
         #self.decoder = DecoderLSTM(hidden=hidden)
@@ -383,7 +383,7 @@ class MambaPositionPredictor(nn.Module):
             s_emb = self.spatial_embedding(x, lengths)
             #mask_expanded = valid_mask.unsqueeze(-1).float()
             #x = x * mask_expanded
-            enc_in = torch.cat([x, s_emb, t_emb], dim=-1)
+            enc_in = torch.cat([x, s_emb], dim=-1)
             #enc_in = s_emb + t_emb + self.in_proj(x)
             #t_emb = self.time_attention(t_emb)
             #s_emb = self.space_attention(s_emb)
@@ -424,7 +424,7 @@ class MambaPositionPredictor(nn.Module):
                 #h_bwd = self.dropout2(h_bwd)
                 h_bwd_out = block(h_bwd + h_bwd_original)
                 h_bwd = self.dropout(h_bwd_out + h_bwd"""
-            output = self.norm1(torch.cat([h, h_bwd, self.in_proj(enc_in)], dim= -1))
+            output = torch.cat([h, h_bwd, self.in_proj(enc_in)], dim= -1)
             """if args.nll:
                 mu, sigma = self.gauss_head(output)
                 sigma_all.append(sigma)
