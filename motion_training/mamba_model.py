@@ -296,7 +296,7 @@ class LinearHead(nn.Module):
 
 
 class MambaPositionPredictor(nn.Module):
-    def __init__(self, in_dim=68, d_model=96, d_state=8, d_conv=4, expand=2,
+    def __init__(self, in_dim=36, d_model=96, d_state=8, d_conv=4, expand=2,
                  num_layers=1, hidden=96, pred_len=10):
         super().__init__()
         #self.pred_len = pred_len
