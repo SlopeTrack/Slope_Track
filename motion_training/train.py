@@ -58,7 +58,7 @@ def train_epoch(model, dl, optimizer, opt, args, global_step, total_steps):
         loss_wh = l1_loss(mean[:,:,2:4].to(device), tgt[:,:,2:4])
         l1_loss1 = 0.5 * loss_xy + 0.5 * loss_wh   #0.40 * loss_x + 0.3 * loss_w + 0.3 * loss_y + 0.3 * loss_h
         iou_loss = giou_loss(mean_abs, tgt_abs) #(1 - iou)
-        loss = 0.5 * l1_loss1 + 0.5 * iou_loss.mean()
+        loss = 0.5 * l1_loss1 + 0.5 * iou_loss
 
         # Accuracy
         iou = bbox_iou(mean_abs, tgt_abs)
@@ -89,7 +89,7 @@ def evaluate(model, dl, opt, args):
             loss_wh = l1_loss(mean[:,:,2:4].to(device), tgt[:,:,2:4])
             l1_loss1 = 0.5 * loss_xy + 0.5 * loss_wh
             iou_loss = giou_loss(mean_abs, tgt_abs)  #1 - ious
-            loss = 0.5 * l1_loss1 + 0.5 * iou_loss.mean()
+            loss = 0.5 * l1_loss1 + 0.5 * iou_loss
             
             total += loss.item()
             
