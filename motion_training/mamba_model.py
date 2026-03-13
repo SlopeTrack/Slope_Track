@@ -134,10 +134,6 @@ class MambaPositionPredictor(nn.Module):
         
             output = self.norm1(torch.cat([h, h_bwd, self.dropout4(new_enc_in)], dim= -1))
 
-            if args.nll:
-               mu_all, sigma_all = self.gauss_head(output)
-               return mu_all[:,:args.target_len,:], sigma_all[:,:args.target_len,:]
-            else:
-               mu_all = self.head(output)
-               return mu_all[:,:args.target_len,:]
+            mu_all = self.head(output)
+            return mu_all[:,:args.target_len,:]
 
