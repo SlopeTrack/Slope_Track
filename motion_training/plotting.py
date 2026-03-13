@@ -36,15 +36,6 @@ def plot_pred(tgt, mean_abs, inp_abs, start_idx, end_idx, target_idx, args, fram
     print('Input',inp_abs[sample, :input_len, :2].cpu().numpy(), 'Mean', mean_abs[sample,:pred_len, :4].cpu().numpy(), 'Target', tgt[sample, :pred_len, :4].cpu().numpy())
     print(sequence[sample], old_track_id[sample], start_idx, end_idx, target_idx) 
 
-    # Draw uncertainty circles if available
-    if args.nll and sigma is not None:
-        for t in range(pred_len):
-            center = pred_xy[t]
-            std = sigma[sample, t, :2].cpu().numpy()  # Use x and y std
-            radius = np.mean(std)
-            circle = patches.Circle(center, radius, color='blue', alpha=0.15)
-            plt.gca().add_patch(circle)
-
     # Annotate frame numbers: input + predicted + ground truth
     for i, (x, y) in enumerate(input_xy):
         if i < len(frame_numbers):
@@ -66,6 +57,7 @@ def plot_pred(tgt, mean_abs, inp_abs, start_idx, end_idx, target_idx, args, fram
     plt.tight_layout()
     plt.savefig(f"trajectory_prediction_option_{args.model}_{args.option}_{args.min_len}_{args.max_len}_{args.target_len}_paper_model.png")
     plt.close()
+    print("Example prediction:", f"trajectory_prediction_option_{args.model}_{args.option}_{args.min_len}_{args.max_len}_{args.target_len}_paper_model.png")
 
 def plot_train_val(train_losses, val_losses, lrs, args):
     epochs = list(range(1, len(train_losses) + 1))
@@ -91,6 +83,7 @@ def plot_train_val(train_losses, val_losses, lrs, args):
     plt.tight_layout()
     plt.savefig(f"training_curves_option_{args.model}_{args.option}_{args.min_len}_{args.max_len}_{args.target_len}_paper_model.png", dpi=300)
     plt.close()
+    print("Training curves:", f"training_curves_option_{args.model}_{args.option}_{args.min_len}_{args.max_len}_{args.target_len}_paper_model.png")
 
 def accuracy_euclid(all_ious, args):
 
@@ -123,3 +116,4 @@ def accuracy_iou(all_ious, args):
     plt.tight_layout()
     plt.savefig(f"accuracy_option_{args.model}_{args.option}_{args.min_len}_{args.max_len}_{args.target_len}_paper_model.png", dpi=300)
     plt.close()
+    print("Accuracy plot:", f"accuracy_option_{args.model}_{args.option}_{args.min_len}_{args.max_len}_{args.target_len}_paper_model.png")
