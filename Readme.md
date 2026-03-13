@@ -121,6 +121,7 @@ The evaluation metrics and code are from [MOT Challenge](https://motchallenge.ne
 
 **This research work is being carried out as part of a collaborative i-Démo Regionalized project under the French government's regionalized France 2030 program. It was financed via Bpifrance by the French government, the Auvergne-Rhône-Alpes Region and Grenoble Alpes Métropole.**
 
+## Citation
 ~~~
 @article{Campbell2026SlopeTrack,
           title   = {Slope-Track: Multiple Object Tracking on Ski Slopes},
@@ -134,6 +135,7 @@ The evaluation metrics and code are from [MOT Challenge](https://motchallenge.ne
         }
         
 ~~~
+
 
 
 
