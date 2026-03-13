@@ -118,21 +118,21 @@ class MambaPositionPredictor(nn.Module):
             lengths_tensor = torch.tensor(lengths, device=device)  # (B,)
             s_emb = self.spatial_embedding(x, lengths)
             enc_in = torch.cat([x, s_emb], dim=-1)
-            new_enc_in = enc_in
+            new_enc_in = self.in_proj(new_enc_in)
         
             # === Encode history with Mamba ===
-            h = self.dropout1(self.in_proj(new_enc_in))  # (B, T_in, d_model)
+            h = self.dropout1(new_enc_in)  # (B, T_in, d_model)
             for block in self.mamba_blocks:
                 h = block(h)
                 h = self.dropout2(h)
 
-            h_bwd = torch.flip(self.in_proj(new_enc_in), dims=[1])  # (B, T_in, d_model)
+            h_bwd = torch.flip(new_enc_in, dims=[1])  # (B, T_in, d_model)
             for block in self.mamba_blocks2:
                 h_bwd = block(h_bwd)
                 h_bwd = self.dropout3(h_bwd)
             h_bwd = torch.flip(h_bwd, dims=[1])
         
-            output = self.norm1(torch.cat([h, h_bwd, self.dropout4(self.in_proj(enc_in))], dim= -1))
+            output = self.norm1(torch.cat([h, h_bwd, self.dropout4(new_enc_in)], dim= -1))
 
             if args.nll:
                mu_all, sigma_all = self.gauss_head(output)
