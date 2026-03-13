@@ -54,8 +54,8 @@ def train_epoch(model, dl, optimizer, opt, args, global_step, total_steps):
         tgt_abs = denormalize(tgt.to(device), ref, last, args, option=opt, delta=delta_tgt, widths=width, heights=height)
 
         #Losses
-        loss_xy = l1_loss(mean[:,:,0:2].to(device), tgt[:,:,0:2]) #+ nll_loss2(mean[:,:,:2].to(device), tgt[:,:,:2].to(device), sigma[:,:,:2].to(device))
-        loss_wh = l1_loss(mean[:,:,2:4].to(device), tgt[:,:,2:4]) #+ nll_loss2(mean[:,:,2:4].to(device), tgt[:,:,2:4].to(device), sigma[:,:,2:4].to(device))
+        loss_xy = l1_loss(mean[:,:,0:2].to(device), tgt[:,:,0:2]) 
+        loss_wh = l1_loss(mean[:,:,2:4].to(device), tgt[:,:,2:4])
         l1_loss1 = 0.5 * loss_xy + 0.5 * loss_wh   #0.40 * loss_x + 0.3 * loss_w + 0.3 * loss_y + 0.3 * loss_h
         iou_loss = giou_loss(mean_abs, tgt_abs) #(1 - iou)
         loss = 0.5 * l1_loss1 + 0.5 * iou_loss.mean()
@@ -85,8 +85,8 @@ def evaluate(model, dl, opt, args):
             tgt_abs = denormalize(tgt.to(device), ref, last, args, option=opt, delta=delta_tgt, widths=width, heights=height)
             
             #Loss
-            loss_xy = l1_loss(mean[:,:,0:2].to(device), tgt[:,:,0:2]) #+ nll_loss2(mean[:,:,:2].to(device), tgt[:,:,:2].to(device), sigma[:,:,:2].to(device))
-            loss_wh = l1_loss(mean[:,:,2:4].to(device), tgt[:,:,2:4]) #+ nll_loss2(mean[:,:,2:4].to(device), tgt[:,:,2:4].to(device), sigma[:,:,2:4].to(device))
+            loss_xy = l1_loss(mean[:,:,0:2].to(device), tgt[:,:,0:2])
+            loss_wh = l1_loss(mean[:,:,2:4].to(device), tgt[:,:,2:4])
             l1_loss1 = 0.5 * loss_xy + 0.5 * loss_wh
             iou_loss = giou_loss(mean_abs, tgt_abs)  #1 - ious
             loss = 0.5 * l1_loss1 + 0.5 * iou_loss.mean()
