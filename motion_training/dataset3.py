@@ -4,7 +4,6 @@ from torch.utils.data import Dataset
 import pickle
 import numpy as np
 
-#np.random.seed(10)
 torch.manual_seed(10)
 
 # ================== Normalization ==================
@@ -125,18 +124,8 @@ class TrajDataset(Dataset):
                     self.index.append((rec_id, start_idx, seq_len, gap))
 
                     if augment:
-                        if 'gen' in pickle_file:
-                            self.index.append((rec_id, start_idx, seq_len, gap, "scale"))
-                            self.index.append((rec_id, start_idx, seq_len, gap, "translate"))
-                        else:
-                        #print(augment)
-                        #self.index.append((rec_id, start_idx, seq_len, gap))
-                            self.index.append((rec_id, start_idx, seq_len, gap, "scale"))
-                            self.index.append((rec_id, start_idx, seq_len, gap, "translate"))
-                        #self.index.append((rec_id, start_idx, seq_len, gap, "scale"))
-                        #self.index.append((rec_id, start_idx, seq_len, gap, "translate"))
-                        #self.index.append((rec_id, start_idx, seq_len, gap, "scale"))
-                        #self.index.append((rec_id, start_idx, seq_len, gap, "translate"))
+                        self.index.append((rec_id, start_idx, seq_len, gap, "scale"))
+                        self.index.append((rec_id, start_idx, seq_len, gap, "translate"))
 
         print(f"{len(self.index)} samples from {pickle_file}", flush=True)
 
