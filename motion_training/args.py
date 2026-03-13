@@ -12,9 +12,4 @@ def make_parser():
     parser.add_argument("--nll", dest="nll", default=False, action="store_true", help="Whether to use nll loss")
     parser.add_argument("--train", dest="train", default=False, action="store_true", help="train")
     parser.add_argument("--target-len", dest="target_len", default=1, type=int, help="length of trajectory prediction")
-    parser.add_argument("--hidden-size", dest="hidden_size", default=10, type=int, help="model width")
-    parser.add_argument("--teacher-forcing-ratio", dest="teacher_forcing_ratio", default=0.5, type=float, help="ratio to include gt target to help learning")
-    parser.add_argument("--synthetic-only", dest="synthetic_only", default=False, action="store_true", help=" synthetic only")
-    parser.add_argument("--use-synthetic", dest="use_synthetic", default=False, action="store_true", help="real plus synthetic")
-    parser.add_argument("--model-name",dest="model_name", default="lstm", type=str, help="model name for finetuning")
     return parser
