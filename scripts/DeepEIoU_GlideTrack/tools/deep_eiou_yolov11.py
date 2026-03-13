@@ -9,12 +9,6 @@ sys.path.append('.')
 
 from loguru import logger
 
-#from yolox.data.data_augment import preproc
-#from yolox.exp import get_exp
-#from yolox.utils import fuse_model, get_model_info, postprocess
-#from yolox.utils.visualize import plot_tracking
-#from yolox.tracking_utils.timer import Timer
-
 from tracker.tracker.Deep_EIoU_LSTM import Deep_EIoU
 from fast_reid.fast_reid_interfece import FastReIDInterface
 
@@ -299,7 +293,7 @@ def main(args):
     os.makedirs(output_dir, exist_ok=True)
 
     if args.save_result:
-        vis_folder = osp.join(output_dir, f'deepeiou_mamba60_60_60{args.glide_label}')
+        vis_folder = osp.join(output_dir, f'deepeiou_mamba60_60_60{args.glide_label}', 'data')
         os.makedirs(vis_folder, exist_ok=True)
     
     print(f"Saving to {vis_folder}")
@@ -329,22 +323,16 @@ def main(args):
     print(sequence_dirs)
     for seq in sequence_dirs:
         seq_dir = osp.join(split_path, seq)
-        if seq != 'slope_track000027':
-           #seq_path = osp.join(seq_dir, "img1")
-
-           #logger.info(f"Processing sequence: {seq_path}")
+        if seq != 'slope_track000043':
+            
            args.fps = get_fps_from_seqinfo(seq_dir)
 
-           args.path = seq_dir#path
-           #print(seq_dir)
+           args.path = seq_dir
            current_time = time.localtime()
            image_demo(predictor, vis_folder, current_time, args)
 
 
 if __name__ == "__main__":
     args = make_parser().parse_args()
-
-    #args.ablation = False
-    #args.mot20 = not args.fuse_score
 
     main(args)
