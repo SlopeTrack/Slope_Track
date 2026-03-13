@@ -12,7 +12,7 @@ from torchvision.ops import generalized_box_iou
 from lstm import TrajModel
 #from dataset import TrajDataset, collate_fn
 from denorm import denormalize, denormalize_sequence
-from loss import bbox_iou, euclid, nll_loss1, nll_loss2, ciou_loss, mse_loss, l1_loss, giou_loss
+from loss import bbox_iou, euclid, nll_loss2, ciou_loss, mse_loss, l1_loss, giou_loss
 from plotting import plot_pred, plot_train_val, accuracy_euclid, accuracy_iou
 from args import make_parser
 from torch.optim.lr_scheduler import LambdaLR
@@ -165,7 +165,7 @@ def main(args):
 
         print("Model saved at:", model_name)
         
-        #Plots
+        #Training plots
         plot_train_val(train_losses, val_losses, lrs, args)
         accuracy_iou(all_ious,args)
 
