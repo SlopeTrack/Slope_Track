@@ -28,19 +28,15 @@ def xywh_to_xyxy(boxes: torch.Tensor) -> torch.Tensor:
     y2 = cy + h / 2
     return torch.stack([x1, y1, x2, y2], dim=-1)
 
-
-
 def ciou_loss(pred_boxes: torch.Tensor, target_boxes: torch.Tensor, reduction: str = 'mean') -> torch.Tensor:
-    # CIoU loss is already implemented in torchvision
     
     pred_boxes = xywh_to_xyxy(pred_boxes)
     target_boxes = xywh_to_xyxy(target_boxes)
 
-    loss = complete_box_iou_loss(pred_boxes, target_boxes, reduction='none')
+    loss = complete_box_iou_loss(pred_boxes, target_boxes, reduction='mean')
     return loss
 
 def giou_loss(pred_boxes: torch.Tensor, target_boxes: torch.Tensor, reduction: str = 'mean') -> torch.Tensor:
-    # CIoU loss is already implemented in torchvision
     
     pred_boxes = xywh_to_xyxy(pred_boxes)
     target_boxes = xywh_to_xyxy(target_boxes)
@@ -79,32 +75,6 @@ def euclid(pred, target):
     distances = torch.norm(diff, dim=1)
     return distances
     
-    
-def nll_loss1(target, mu, sigma, rho, eps=1e-6):
-    """
-    target: (B, 2) - true x, y
-    mu: (B, 2) - predicted mean x, y
-    sigma: (B, 2) - predicted std x, y (must be > 0)
-    rho: (B,) - predicted correlation (must be in [-1, 1])
-    """
-    x, y = target[:, 0], target[:, 1]
-    mu_x, mu_y = mu[:, 0], mu[:, 1]
-    sigma_x, sigma_y = sigma[:, 0], sigma[:, 1]
-
-    # z term in bivariate Gaussian
-    z_x = (x - mu_x) / (sigma_x + eps)
-    z_y = (y - mu_y) / (sigma_y + eps)
-
-    z = z_x ** 2 + z_y ** 2 - 2 * rho * z_x * z_y
-    denom = 2 * (1 - rho ** 2 + eps)
-
-    # Normalization constant
-    norm_const = 2 * torch.pi * sigma_x * sigma_y * torch.sqrt(1 - rho ** 2 + eps)
-
-    #print(x,y, mu_y, mu_x,sigma_x, sigma_y,  z_x, z_y, z, denom, norm_const)
-    log_prob = -z / denom - torch.log(norm_const + eps)
-
-    return -log_prob.mean()  # NLL loss
 
 def nll_loss2(pred_mean, target, var):
     criterion = nn.GaussianNLLLoss()
