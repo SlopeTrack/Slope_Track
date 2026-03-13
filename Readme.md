@@ -110,7 +110,7 @@ pip install mamba-ssm[causal-conv1d]
 
 6. Run 
 ~~~
-python tools/deep_eiou_yolov11_glidetrack.py
+python tools/deep_eiou_yolov11_glidetrack.py --glide_weights NAME_OF_MODEL --glide_label NAME_OF_SAVE_FILE --in_dim 36 --num_freqs 8 --split test
 ~~~
 
 ## License
@@ -134,6 +134,7 @@ The evaluation metrics and code are from [MOT Challenge](https://motchallenge.ne
         }
         
 ~~~
+
 
 
 
