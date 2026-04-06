@@ -92,6 +92,7 @@ class MambaPositionPredictor(nn.Module):
             Mamba(d_model=d_model, d_state=d_state, d_conv=d_conv, expand=expand)
             for _ in range(num_layers)
         ])
+        self.embedding = nn.Embedding(360,32)
 
         self.spatial_embedding = SpatialPosEncoding(d_model=32)
        
