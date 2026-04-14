@@ -37,11 +37,11 @@ def build_scheduler(optimizer, total_epochs, warmup_epochs=100, min_lr=1e-5, bas
 
 
 # ========== Training ==========
-def train_epoch(model, dl, optimizer, opt, args, global_step, total_steps):
+def train_epoch(model, dl, optimizer, opt, args, epoch):
     model.train()
     total = 0
     all_ious = []
-    for inp, tgt, lengths, ref, last, _,  m, _, _, _, delta_inp, delta_tgt ,_ , _, _, width, height in dl:
+    for i, (inp, tgt, lengths, ref, last, _,  m, _, _, _, delta_inp, delta_tgt ,_ , _, _, width, height) in enumerate(dl):
         #print(inp, tgt, ref, last, m, delta, width, height)
         inp, tgt, ref, last, m, delta_inp, delta_tgt = inp.to(device), tgt.to(device), ref.to(device), last.to(device), m.to(device), delta_inp.to(device), delta_tgt.to(device)
 
@@ -63,12 +63,15 @@ def train_epoch(model, dl, optimizer, opt, args, global_step, total_steps):
         # Accuracy
         iou = bbox_iou(mean_abs, tgt_abs)
         all_ious.append(iou.detach().cpu().numpy())
+
+        if i % 50 == 0:
+            print(f"Train {epoch}, {i}/{len(dl)}, Total loss: {loss.detach().cpu():4f}, L1 Loss:{0.5 * l1_loss1.detach().cpu():4f}, GIoU Loss: {iou_loss.detach().cpu():4f}, IoU:{iou.detach().cpu():4f}")
         
         loss.backward()
         optimizer.step()
         total += loss.item()
-        global_step+=1
-    return total / len(dl), optimizer, np.mean(np.concatenate(all_ious)), global_step 
+
+    return model, total / len(dl), optimizer
 
 def evaluate(model, dl, opt, args):
     model.eval()
@@ -150,7 +153,8 @@ def main(args):
         total_steps = len(train_dl)*args.epochs+1
         global_step=0
         for epoch in range(1, args.epochs+1):
-            l, optimizer, train_iou, global_step = train_epoch(model, train_dl, optm, opt, args, global_step,total_steps)
+            model, _, optimizer = train_epoch(model, train_dl, optmizer, opt, args)
+            train_iou, l = evaluate(model, train_dl, opt, args)
             scheduler.step()
             train_losses.append(l)
             current_lr = optimizer.param_groups[0]['lr']
