@@ -40,6 +40,8 @@ def build_scheduler(optimizer, total_epochs, warmup_epochs=100, min_lr=1e-5, bas
 def train_epoch(model, dl, optimizer, opt, args, epoch):
     model.train()
     total = 0
+    total_l1 = 0
+    total_giou = 0
     all_ious = []
     for i, (inp, tgt, lengths, ref, last, _,  m, _, _, _, delta_inp, delta_tgt ,_ , _, _, width, height) in enumerate(dl):
         #print(inp, tgt, ref, last, m, delta, width, height)
@@ -58,18 +60,25 @@ def train_epoch(model, dl, optimizer, opt, args, epoch):
         loss_wh = l1_loss(mean[:,:,2:4].to(device), tgt[:,:,2:4])
         l1_loss1 = 0.5 * loss_xy + 0.5 * loss_wh   #0.40 * loss_x + 0.3 * loss_w + 0.3 * loss_y + 0.3 * loss_h
         iou_loss = giou_loss(mean_abs, tgt_abs) #(1 - iou)
-        loss = 0.5 * l1_loss1 + 0.5 * iou_loss
+        l1_loss1 = 0.5 * l1_loss1
+        iou_loss = 0.5 * iou_loss
+        loss = l1_loss1 + iou_loss
 
         # Accuracy
         iou = bbox_iou(mean_abs, tgt_abs)
         all_ious.append(iou.detach().cpu().numpy())
 
-        if i % 50 == 0:
-            print(f"Train {epoch}, {i}/{len(dl)}, Total loss: {loss.detach().cpu():4f}, L1 Loss:{0.5 * l1_loss1.detach().cpu():4f}, GIoU Loss: {iou_loss.detach().cpu():4f}, IoU:{iou.detach().cpu():4f}")
-        
         loss.backward()
         optimizer.step()
+        total_giou += iou_loss.detach().cpu()
+        total_l1 += l1_loss.detach().cpu()
         total += loss.item()
+        
+        if i % 50 == 0:
+            ious = np.mean(np.concatenate(all_ious))
+            print(f"Train {epoch}, {i+1}/{len(dl)}, Total loss: {total/(i+1):.4f}, L1 Loss:{total_giou/(i+1):.4f}, GIoU Loss: {iou_loss/(i+1):.4f}, IoU:{ious:.4f}")
+        
+        
 
     return model, total / len(dl), optimizer
 
