@@ -80,7 +80,7 @@ def train_epoch(model, dl, optimizer, opt, args, epoch):
         
         
 
-    return model, total / len(dl), optimizer
+    #return model, total / len(dl), optimizer
 
 def evaluate(model, dl, opt, args):
     model.eval()
@@ -159,10 +159,8 @@ def main(args):
         val_losses = []
         lrs = []
         all_ious = []
-        total_steps = len(train_dl)*args.epochs+1
-        global_step=0
         for epoch in range(1, args.epochs+1):
-            model, _, optimizer = train_epoch(model, train_dl, optmizer, opt, args)
+            train_epoch(model, train_dl, optmizer, opt, args)
             train_iou, l = evaluate(model, train_dl, opt, args)
             scheduler.step()
             train_losses.append(l)
